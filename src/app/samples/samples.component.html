@@ -1,0 +1,11 @@
+<div *ngFor="let codeSample of samples">
+  <div class="code-sample" [ngClass]="{ avoid: codeSample.avoid }">
+    <div class="title">
+      {{ codeSample.fileName }}
+    </div>
+    <div class="code">
+      <pre
+        class="code"><code [highlight]="codeSample.code | prettier:codeSample.fileName" [lineNumbers]="true"></code></pre>
+    </div>
+  </div>
+</div>

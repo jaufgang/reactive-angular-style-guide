@@ -1,73 +1,22 @@
-<ng-container *ngIf="styleGuides$ | async as styleGuides">
-  <div *ngFor="let styleGuide of styleGuides" class="wrapper">
-    <div>
-      <h1>{{ styleGuide.fields.title }}</h1>
+<div *ngFor="let styleGuide of styleGuide">
+  <app-title [title]="styleGuide.title"></app-title>
+  <app-discussion [discussion]="styleGuide.discussion"></app-discussion>
 
-      <div class="padding-left">
-        <ngx-contentful-rich-text *ngIf="styleGuide.fields.discussion" [document]="styleGuide.fields.discussion">
-        </ngx-contentful-rich-text>
-      </div>
-      <div *ngFor="let section of styleGuide.fields.sections; let sectionNumber = index">
-        <h2>{{ sectionNumber + 1 | number: "2.0" }} - {{ section.fields.title }}</h2>
-        <div class="padding-left">
-          <ngx-contentful-rich-text *ngIf="section.fields.discussion" [document]="section.fields.discussion">
-          </ngx-contentful-rich-text>
-        </div>
-        <div *ngFor="let rule of section.fields.rules; let ruleNumber = index" class="rule">
-          Style
-          {{ sectionNumber + 1 | number: "2.0" }}-{{ ruleNumber + 1 | number: "2.0" }}
-          <h3>{{ rule.fields.title }}</h3>
-          <div class="padding-left">
-            <ng-container *ngFor="let doItem of rule.fields.do">
-              <p><b>Do</b> {{ doItem }}</p>
-            </ng-container>
+  <div *ngFor="let section of styleGuide.sections; let sectionIndex = index">
+    <app-title [sectionIndex]="sectionIndex" [sectionTitle]="section.title"></app-title>
+    <app-discussion [discussion]="section.discussion"></app-discussion>
 
-            <ng-container *ngFor="let consider of rule.fields.consider">
-              <p><b>Consider</b> {{ consider }}</p>
-            </ng-container>
-
-            <ng-container *ngFor="let avoid of rule.fields.avoid">
-              <p><b>Avoid </b> {{ avoid }}</p>
-            </ng-container>
-
-            <ng-container *ngFor="let why of rule.fields.why">
-              <p><b>Why?</b> {{ why }}</p>
-            </ng-container>
-
-            <ngx-contentful-rich-text *ngIf="rule.fields.discussion" [document]="rule.fields.discussion">
-            </ngx-contentful-rich-text>
-
-            <div *ngFor="let codeSample of rule.fields.codeSamples">
-              <div
-                *ngIf="codeSample | guardType: isCodeSample as codeSample"
-                class="code-sample"
-                [ngClass]="{ avoid: codeSample.fields.avoid }"
-              >
-                <div class="title">
-                  {{ codeSample.fields.fileName }}
-                </div>
-                <div class="code">
-                  <pre class="code"><code [highlight]="codeSample.fields.code | prettier:codeSample.fields.fileName"
-                       [lineNumbers]="true"></code></pre>
-                </div>
-              </div>
-
-              <div *ngIf="codeSample | guardType: isMultiFileCodeSample as codeSample" class="code-file-group">
-                <mat-tab-group>
-                  <mat-tab *ngFor="let z of codeSample.fields.codeSampleFile" [label]="z.fields.fileName">
-                    <div class="code">
-                      <pre><code [highlight]="z.fields.code | prettier:z.fields.fileName"
-                               [lineNumbers]="true"></code></pre>
-                    </div>
-                  </mat-tab>
-                </mat-tab-group>
-              </div>
-            </div>
-
-            <div class="sidebar" *ngIf="rule.fields.sidebar" [innerHTML]="rule.fields.sidebar | MarkdownToHtml"></div>
-          </div>
-        </div>
+    <div *ngFor="let rule of section.rules; let ruleIndex = index">
+      <app-title [sectionIndex]="sectionIndex" [ruleIndex]="ruleIndex" [ruleTitle]="section.title"></app-title>
+      <div class="pl-4">
+        <app-rules title="Do" [rules]="rule.do"></app-rules>
+        <app-rules title="Consider" [rules]="rule.consider"></app-rules>
+        <app-rules title="Avoid" [rules]="rule.avoid"></app-rules>
+        <app-rules title="Why" [rules]="rule.why"></app-rules>
+        <app-discussion [discussion]="rule.discussion"></app-discussion>
+        <app-samples [samples]="rule.codeSamples"></app-samples>
+        <div class="sidebar" *ngIf="rule.sidebar" [innerHTML]="rule.sidebar | MarkdownToHtml"></div>
       </div>
     </div>
   </div>
-</ng-container>
+</div>

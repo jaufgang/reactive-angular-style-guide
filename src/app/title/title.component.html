@@ -1,0 +1,7 @@
+<h2 class="bg-gray-700 text-white p-4" *ngIf="title">{{ title }}</h2>
+<h2 class="bg-gray-200 p-4" *ngIf="sectionTitle">{{ sectionIndex + 1 | number: "2.0" }} - {{ sectionTitle }}</h2>
+<h3 class="bg-gray-500 p-4 text-white" *ngIf="ruleTitle">
+  <span class="font-bold uppercase">Style
+    {{ index + 1 | number: "2.0" }}-{{ ruleIndex + 1 | number: "2.0" }}: </span>
+  {{ ruleTitle }}
+</h3>

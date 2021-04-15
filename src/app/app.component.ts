@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ContentfulService } from './contentful.service';
-import { isCodeSample, isMultiFileCodeSample } from './contentful-types';
+import { guide } from './guide';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +8,5 @@ import { isCodeSample, isMultiFileCodeSample } from './contentful-types';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  readonly isMultiFileCodeSample = isMultiFileCodeSample;
-  readonly isCodeSample = isCodeSample;
-
-  readonly styleGuides$ = this.contentfulService.getStyleGuides();
-
-  constructor(private contentfulService: ContentfulService) {}
+  styleGuide = guide;
 }
