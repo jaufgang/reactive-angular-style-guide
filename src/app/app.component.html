@@ -1,21 +1,26 @@
-<div *ngFor="let styleGuide of styleGuide">
-  <app-title [title]="styleGuide.title"></app-title>
-  <app-discussion [discussion]="styleGuide.discussion"></app-discussion>
+<div class="flex">
+  <app-nav [styleGuides]="styleGuide"></app-nav>
+  <div class="main-content" *ngFor="let styleGuide of styleGuide; let mainIndex = index;">
+    <app-title [title]="styleGuide.title" id="{{mainIndex}}"></app-title>
+    <app-discussion [discussion]="styleGuide.discussion"></app-discussion>
 
-  <div *ngFor="let section of styleGuide.sections; let sectionIndex = index">
-    <app-title [sectionIndex]="sectionIndex" [sectionTitle]="section.title"></app-title>
-    <app-discussion [discussion]="section.discussion"></app-discussion>
+    <div *ngFor="let section of styleGuide.sections; let sectionIndex = index">
+      <app-title [sectionIndex]="sectionIndex" [sectionTitle]="section.title" id="{{mainIndex}}-{{sectionIndex}}">
+      </app-title>
+      <app-discussion [discussion]="section.discussion"></app-discussion>
 
-    <div *ngFor="let rule of section.rules; let ruleIndex = index">
-      <app-title [sectionIndex]="sectionIndex" [ruleIndex]="ruleIndex" [ruleTitle]="section.title"></app-title>
-      <div class="pl-4">
-        <app-rules title="Do" [rules]="rule.do"></app-rules>
-        <app-rules title="Consider" [rules]="rule.consider"></app-rules>
-        <app-rules title="Avoid" [rules]="rule.avoid"></app-rules>
-        <app-rules title="Why" [rules]="rule.why"></app-rules>
-        <app-discussion [discussion]="rule.discussion"></app-discussion>
-        <app-samples [samples]="rule.codeSamples"></app-samples>
-        <div class="sidebar" *ngIf="rule.sidebar" [innerHTML]="rule.sidebar | MarkdownToHtml"></div>
+      <div *ngFor="let rule of section.rules; let ruleIndex = index">
+        <app-title [sectionIndex]="sectionIndex" [ruleIndex]="ruleIndex" [ruleTitle]="section.title"
+          id="{{mainIndex}}-{{sectionIndex}}-{{ruleIndex}}"></app-title>
+        <div class="pl-4">
+          <app-rules title="Do" [rules]="rule.do"></app-rules>
+          <app-rules title="Consider" [rules]="rule.consider"></app-rules>
+          <app-rules title="Avoid" [rules]="rule.avoid"></app-rules>
+          <app-rules title="Why" [rules]="rule.why"></app-rules>
+          <app-discussion [discussion]="rule.discussion"></app-discussion>
+          <app-samples [samples]="rule.codeSamples"></app-samples>
+          <div class="sidebar" *ngIf="rule.sidebar" [innerHTML]="rule.sidebar | MarkdownToHtml"></div>
+        </div>
       </div>
     </div>
   </div>

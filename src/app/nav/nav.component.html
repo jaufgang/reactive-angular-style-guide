@@ -1,0 +1,15 @@
+<nav class="border-r border-gray-300 h-full fixed  main-nav">
+  <div class="p-4">
+    <p class="text-xl text-center pb-2 font-semibold">Styleguide</p>
+    <input #search class="p-2 border border-gray-300 w-full" placeholder="search" (input)="filterMenu(search.value)" />
+  </div>
+  <div class="border-b border-gray-300"></div>
+  <div>
+    <ul class="list-none p-3">
+      <li class="pt-1 pb-1" *ngFor="let item of filteredMenu"
+        [ngClass]="{'pl-2 text-indigo-500': item.level == 1, 'leading-tight text-black italic pl-4': item.level == 2, 'pl-6 text-gray-500': item.level == 3}">
+        <a (click)="scrollToElement(item)" class="hover:underline cursor-pointer">{{item.title}}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
